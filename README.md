@@ -1,5 +1,7 @@
 # spike-clojure-standalone
 
+The purpose of this spike is to join the functionality of standalone execution (``uberjar``) and CLI options using ``clojure/cli.tools``
+
 ## Standalone execution
 
 ```bash
