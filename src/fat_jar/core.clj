@@ -14,7 +14,7 @@
   (let [options (parse-opts args cli-options :strict true :missing true)
          errors? #(not (empty? (:errors %)))
          help? #(:help %)
-         print-help #(println (:summary %))]
+         print-help #(do (println "usage:") (println (:summary %)))]
          ; (println options)
     (cond
       (errors? options) (do (print-help options) (print (:errors options)))

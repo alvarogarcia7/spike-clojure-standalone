@@ -92,3 +92,5 @@ g d
 (#'fat-jar.core/-main "-t= .")
 (require 'fat-jar.core :reload)
 (#'fat-jar.core/-main "-t= .")
+(require 'fat-jar.core :reload)
+(#'fat-jar.core/-main "-t= .")
