@@ -2,6 +2,7 @@
   (:require [clojure.tools.cli :refer [parse-opts]])
   (:gen-class))
 
+; guide for cli-options: https://github.com/clojure/tools.cli/blob/master/src/test/clojure/clojure/tools/cli_test.clj
 (def cli-options
   [["-o" "--output DIRECTORY" "Folder where to write the file"
      :missing "output option is missing"]
