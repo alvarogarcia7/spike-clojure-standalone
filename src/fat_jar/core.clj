@@ -3,16 +3,20 @@
   (:gen-class))
 
 (def cli-options
-  [["-o" "--output DIRECTORY" "Folder where to write the file"]
-   ["-t" "--type TYPE" "type of input"]
+  [["-o" "--output DIRECTORY" "Folder where to write the file"
+     :missing "output option is missing"]
+   ["-t" "--type TYPE" "type of input"
+     :missing "type option is missing"]
+
    ["-h" "--help"]])
 
 (defn -main [& args]
-  (let [options (parse-opts args cli-options)
+  (let [options (parse-opts args cli-options :strict true :missing true)
          errors? #(not (empty? (:errors %)))
          help? #(:help %)
          print-help #(println (:summary %))]
+         ; (println options)
     (cond
-      (errors? options) (print-help options)
+      (errors? options) (do (print-help options) (print (:errors options)))
       (help? options) (print-help options)
       :else (print-help options))))
