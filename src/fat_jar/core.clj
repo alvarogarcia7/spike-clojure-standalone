@@ -9,7 +9,10 @@
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options)
-         print-help #(or (not (empty? (:errors %))) (:help %))]
+         errors? #(not (empty? (:errors %)))
+         help? #(:help %)
+         print-help #(println (:summary %))]
     (cond
-      (print-help options) (println (:summary options))
-      :else (println (:summary options)))))
+      (errors? options) (print-help options)
+      (help? options) (print-help options)
+      :else (print-help options))))
