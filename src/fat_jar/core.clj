@@ -19,4 +19,6 @@
     (cond
       (errors? options) (do (print-help options) (print (:errors options)))
       (help? options) (print-help options)
-      :else (print-help options))))
+      :else (do 
+        (println "doing stuff")
+        (println options)))))
