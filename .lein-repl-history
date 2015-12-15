@@ -1,0 +1,37 @@
+(main)
+(require 'core)
+(require 'fat-jar.core)
+(main)
+cli-options
+main
+fat-jar.core.main
+fat-jar.core.-main
+fat-jar.core/main
+#'fat-jar.core/main
+#'core/main
+(def s #'core/main)
+(def s #'core/-main)
+(def s #'fat-jar.core/-main)
+s
+(s)
+(s -v)
+(s "-v")
+#'fat-jar.core/-main "-v"
+(#'fat-jar.core/-main "-v")
+(not-empty [])
+(not-empty [1])
+(not (empty? [1]))
+(not (empty? []))
+(require 'fat-jar.core)
+(#'fat-jar.core/-main "-v")
+(#'fat-jar.core/-main "-")
+(#'fat-jar.core/-main)
+(require 'fat-jar.core)
+(#'fat-jar.core/-main)
+(require 'fat-jar.core :reload)
+(#'fat-jar.core/-main)
+(#'fat-jar.core/-main "a")
+(require 'fat-jar.core :reload)
+(#'fat-jar.core/-main "a")
+(require 'fat-jar.core :reload)
+(#'fat-jar.core/-main "a")
