@@ -35,3 +35,6 @@ s
 (#'fat-jar.core/-main "a")
 (require 'fat-jar.core :reload)
 (#'fat-jar.core/-main "a")
+g d
+(require 'fat-jar.core :reload)
+(#'fat-jar.core/-main "a")
