@@ -17,7 +17,7 @@
          print-help #(do (println "usage:") (println (:summary %)))]
          ; (println options)
     (cond
-      (errors? options) (do (print-help options) (print (:errors options)))
+      (errors? options) (do (print-help options) (println (:errors options)))
       (help? options) (print-help options)
       :else (do 
         (println "doing stuff")
