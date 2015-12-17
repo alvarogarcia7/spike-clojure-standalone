@@ -1,6 +1,10 @@
 (ns fat-jar.core
-  (:require [clojure.tools.cli :refer [parse-opts]])
+  (:require [clojure.tools.cli :refer [parse-opts]]
+                 [clojure.java.io :as io]
+                 [clojure.tools.reader.edn :as edn]
+                 [clj-json.core :as json])
   (:gen-class))
+(import '(java.io StringReader BufferedReader))
 
 ; guide for cli-options: https://github.com/clojure/tools.cli/blob/master/src/test/clojure/clojure/tools/cli_test.clj
 (def cli-options
@@ -10,6 +14,10 @@
      :missing "type option is missing"]
 
    ["-h" "--help"]])
+
+(defn select- [selector coll]
+  """Navigate using the selector"""
+  (reduce #(% %2) coll selector))
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
@@ -22,4 +30,34 @@
       (help? options) (print-help options)
       :else (do 
         (println "doing stuff")
-        (println options)))))
+        (println options)
+        (let [mappings (->> "./mappings.edn"
+                     slurp
+                     edn/read-string)
+
+              selections (->> mappings
+                      (map :map))
+
+               user-data (->> "./user.json"
+                     slurp
+                     StringReader.
+                     BufferedReader.
+                     json/parsed-seq
+                     first)]
+        (->> mappings
+          println)
+
+        (->> user-data
+          println)
+
+        (->> selections
+          println)
+
+       
+       (->>  (map #(select- % user-data) selections)
+          println)
+
+  
+     
+     ))
+      )))
