@@ -1,4 +1,4 @@
 [
-{:map ["a" "b" "d"] :to "fecha"}
-{:map ["a" "b1"] :to "hora"}
+{:map ["a" "b" "d"] :to "v1"}
+{:map ["a" "b1"] :to "v2"}
 ]

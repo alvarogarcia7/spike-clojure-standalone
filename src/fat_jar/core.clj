@@ -60,8 +60,6 @@
        (->>  (map #(select- % user-data) mappings)
           (map #(str (:output %) "|" (:v %)))
           println)
-
-  
      
      ))
       )))
