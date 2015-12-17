@@ -53,14 +53,14 @@
                      BufferedReader.
                      json/parsed-seq
                      first)]
-        (->> mappings
-          println)
-
-        (->> user-data
-          println)
-
-        (->> selections
-          println)
+;        (->> mappings
+;          println)
+;
+;        (->> user-data
+;          println)
+;
+;        (->> selections
+;          println)
 
        
        (->>  (map #(select- % user-data) mappings)
