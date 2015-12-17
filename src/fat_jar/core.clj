@@ -15,10 +15,10 @@
 
    ["-h" "--help"]])
 
-(defn select- [a coll]
+(defn select- [data-mapping coll]
   """Navigate using the selector"""
-  (let [selector (:map a)
-         output (:to a)]
+  (let [selector (:map data-mapping)
+         output (:to data-mapping)]
     {:output output
       :v(reduce #(% %2) coll selector)}))
 
