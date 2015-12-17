@@ -45,7 +45,6 @@
       (errors? options) (do (print-help options) (println (:errors options)))
       (help? options) (print-help options)
       :else (do 
-        (println "doing stuff")
         (println options)
         (let [mappings (->> (config :input.mappings)
                      slurp
