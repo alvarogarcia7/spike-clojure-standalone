@@ -30,8 +30,10 @@
     (.newLine w))))
 
 (def config
-  (p/properties->map
-    (p/load-from (io/file "./mapper.properties")) true))
+  (->> "./mapper.properties"
+    io/file
+    p/load-from
+    #(p/properties->map % true)))
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
