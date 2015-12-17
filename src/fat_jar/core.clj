@@ -40,7 +40,6 @@
          errors? #(not (empty? (:errors %)))
          help? #(:help %)
          print-help #(do (println "usage:") (println (:summary %)))]
-         ; (println options)
     (cond
       (errors? options) (do (print-help options) (println (:errors options)))
       (help? options) (print-help options)
