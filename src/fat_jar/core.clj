@@ -44,7 +44,6 @@
       (errors? options) (do (print-help options) (println (:errors options)))
       (help? options) (print-help options)
       :else (do 
-        (println options)
         (let [mappings (->> (config :input.mappings)
                      slurp
                      edn/read-string)
