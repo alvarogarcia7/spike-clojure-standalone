@@ -29,20 +29,16 @@
     (.write w line)
     (.newLine w))))
 
+(let [pl (p/load-from {"key" "value"})]
+  (p/properties->map pl true))
+
 (def config
   (p/properties->map 
     (->> "./mapper.properties" io/file p/load-from)
     true))
 
-(defn -main [& args]
-  (let [options (parse-opts args cli-options :strict true :missing true)
-         errors? #(not (empty? (:errors %)))
-         help? #(:help %)
-         print-help #(do (println "usage:") (println (:summary %)))]
-    (cond
-      (errors? options) (do (print-help options) (println (:errors options)))
-      (help? options) (print-help options)
-      :else (do 
+(defn process []
+  (do 
         (let [mappings (->> (config :input.mappings)
                      slurp
                      edn/read-string)
@@ -62,4 +58,14 @@
        (->>  mappings
           (map #(select-values user-data %))
           (map format-value)
-          (write-file (config :output.filename)))))))))
+          (write-file (config :output.filename)))))))
+
+(defn -main [& args]
+  (let [options (parse-opts args cli-options :strict true :missing true)
+         errors? #(not (empty? (:errors %)))
+         help? #(:help %)
+         print-help #(do (println "usage:") (println (:summary %)))]
+    (cond
+      (errors? options) (do (print-help options) (println (:errors options)))
+      (help? options) (print-help options)
+      :else (process))))
