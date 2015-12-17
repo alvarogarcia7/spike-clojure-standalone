@@ -30,10 +30,9 @@
     (.newLine w))))
 
 (def config
-  (->> "./mapper.properties"
-    io/file
-    p/load-from
-    #(p/properties->map % true)))
+  (p/properties->map 
+    (->> "./mapper.properties" io/file p/load-from)
+    true))
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
@@ -54,10 +53,13 @@
                      BufferedReader.
                      json/parsed-seq
                      first)]
+
+               (letfn [(select-values [coll mapping]
+                            (select- mapping coll))
+                         (format-value [value]
+                            (str (:output value) "|" (:v value)))]
        
-       (->>  (map #(select- % user-data) mappings)
-          (map #(str (:output %) "|" (:v %)))
-          (write-file (config :output.filename)))
-     
-     ))
-      )))
+       (->>  mappings
+          (map #(select-values user-data %))
+          (map format-value)
+          (write-file (config :output.filename)))))))))
