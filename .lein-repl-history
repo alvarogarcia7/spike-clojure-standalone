@@ -181,3 +181,8 @@ jso
 (reduce jso #(%2 %) ["a" "biz"])
 (reduce #(%2 %) jso ["a" "biz"])
 (reduce #(% %2) jso ["a" "biz"])
+(defn write-file [filename payload]
+   (with-open [writer (clojure.java.io/writer  filename :append true)]
+    (.write writer payload)))
+(write-file "./a.txt" "a")
+(source spit)

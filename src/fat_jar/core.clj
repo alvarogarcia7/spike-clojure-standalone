@@ -22,6 +22,12 @@
     {:output output
       :v(reduce #(% %2) coll selector)}))
 
+(defn write-file [filename payload]
+   (with-open [w (clojure.java.io/writer filename)]
+  (doseq [line payload]
+    (.write w line)
+    (.newLine w))))
+
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
          errors? #(not (empty? (:errors %)))
@@ -59,7 +65,7 @@
        
        (->>  (map #(select- % user-data) mappings)
           (map #(str (:output %) "|" (:v %)))
-          println)
+          (write-file "./a.txt"))
      
      ))
       )))
