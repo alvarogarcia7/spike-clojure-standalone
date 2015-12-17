@@ -186,3 +186,30 @@ jso
     (.write writer payload)))
 (write-file "./a.txt" "a")
 (source spit)
+(require '[clojurewerkz.propertied.properties :as p])
+(p/load-from (io/resource "mapper.properties"))
+(p/load-from (io/resource "./mapper.properties"))
+(require '[clojure.java.io :as io])
+(p/load-from (io/resource "mapper.properties"))
+(p/load-from (io/resource "./mapper.properties"))
+(p/load-from (slurp"./mapper.properties"))
+(p/load-from (slurp "./mapper.properties"))
+(slurp "./mapper.properties")
+(p/load-from (slurp "./mapper.properties"))
+(p/load-from (io/file "./mapper.properties"))
+(p/load-from (io/file "mapper.properties"))
+(let [pl (p/load-from {"key" "value"})]
+  (p/properties->map p true))
+(let [pl (p/load-from {"a key" "a value"})]
+  (p/properties->map pl))
+(require 'fat-jar.core)
+config
+(config)
+config
+(config)
+(read-string (config))
+(p/properties->map (p/load-from (io/file "mapper.properties")) true)
+(p/properties->map (p/load-from (io/file "./mapper.properties")) true)
+(p/load-from (io/file "./mapper.properties"))
+(p/properties->map (p/load-from (io/file "./mapper.properties")) true)
+:a.b

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-diff expected.txt a.txt
+diff expected.txt ab.dat
 
 diff_ok=$?
 

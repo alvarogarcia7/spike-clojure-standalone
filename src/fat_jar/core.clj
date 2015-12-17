@@ -2,7 +2,8 @@
   (:require [clojure.tools.cli :refer [parse-opts]]
                  [clojure.java.io :as io]
                  [clojure.tools.reader.edn :as edn]
-                 [clj-json.core :as json])
+                 [clj-json.core :as json]
+                 [clojurewerkz.propertied.properties :as p])
   (:gen-class))
 (import '(java.io StringReader BufferedReader))
 
@@ -28,6 +29,10 @@
     (.write w line)
     (.newLine w))))
 
+(def config
+  (p/properties->map
+    (p/load-from (io/file "./mapper.properties")) true))
+
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
          errors? #(not (empty? (:errors %)))
@@ -40,14 +45,14 @@
       :else (do 
         (println "doing stuff")
         (println options)
-        (let [mappings (->> "./mappings.edn"
+        (let [mappings (->> (config :input.mappings)
                      slurp
                      edn/read-string)
 
               selections (->> mappings
                       (map :map))
 
-               user-data (->> "./user.json"
+               user-data (->> (config :input.data)
                      slurp
                      StringReader.
                      BufferedReader.
@@ -65,7 +70,7 @@
        
        (->>  (map #(select- % user-data) mappings)
           (map #(str (:output %) "|" (:v %)))
-          (write-file "./a.txt"))
+          (write-file (config :output.filename)))
      
      ))
       )))
