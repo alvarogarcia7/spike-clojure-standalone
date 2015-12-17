@@ -48,9 +48,6 @@
                      slurp
                      edn/read-string)
 
-              selections (->> mappings
-                      (map :map))
-
                user-data (->> (config :input.data)
                      slurp
                      StringReader.
