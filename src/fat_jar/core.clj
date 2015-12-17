@@ -15,9 +15,12 @@
 
    ["-h" "--help"]])
 
-(defn select- [selector coll]
+(defn select- [a coll]
   """Navigate using the selector"""
-  (reduce #(% %2) coll selector))
+  (let [selector (:map a)
+         output (:to a)]
+    {:output output
+      :v(reduce #(% %2) coll selector)}))
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
@@ -54,7 +57,8 @@
           println)
 
        
-       (->>  (map #(select- % user-data) selections)
+       (->>  (map #(select- % user-data) mappings)
+          (map #(str (:output %) "|" (:v %)))
           println)
 
   

@@ -1,3 +1,4 @@
 [
 {:map ["a" "b" "d"] :to "fecha"}
+{:map ["a" "b1"] :to "hora"}
 ]
