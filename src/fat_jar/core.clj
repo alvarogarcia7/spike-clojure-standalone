@@ -50,18 +50,18 @@
     (->> "./mapper.properties" io/file p/load-from)
     true))
 
-(defn at-output-folder [options filename]
+(defn at-folder [options filename]
   (str (:output options) "/" filename))
 
 (defn process [options]
   (do 
-        (let [destination-file (at-output-folder options (config :output.filename))
+        (let [destination-file (at-folder options (config :output.filename))
 
                mappings (get (->> (config :input.mappings)
                                     slurp
                                     edn/read-string) (:template options))
 
-               user-data (->> (config :input.data)
+               user-data (->> (at-folder options (config :input.data))
                      slurp
                      StringReader.
                      BufferedReader.
