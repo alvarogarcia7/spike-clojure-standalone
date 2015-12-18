@@ -19,9 +19,25 @@
 (defn select- [data-mapping coll]
   """Navigate using the selector"""
   (let [selector (:map data-mapping)
-         output (:to data-mapping)]
-    {:output output
-      :v (reduce #(% %2) coll selector)}))
+         output (:to data-mapping)
+         parent (reduce #(% %2) coll (butlast selector))
+         remaining (last selector)
+         many-from-list (map #(get % remaining) parent)
+         many-from-single (list (get parent remaining))
+         value (if (= (list nil) many-from-single) many-from-list many-from-single)
+         multiple (if (= (list nil) many-from-single) "@" "")]
+         (do
+            ;(println remaining)
+            ;(println parent)
+            ;(println many-from-list)
+            ;(println many-from-single)
+            {:output output
+               :v value
+              :multiple multiple}
+             )))
+
+; (select- {:map ["vos" "name"] :to "v7"} user-data)
+; (select- {:map ["a"] :to "v7"} user-data)
 
 (defn write-file [filename payload]
    (with-open [w (clojure.java.io/writer filename)]
@@ -50,7 +66,7 @@
                (letfn [(select-values [coll mapping]
                             (select- mapping coll))
                          (format-value [value]
-                            (str (:output value) "|" (:v value)))]
+                            (str (:multiple value) (:output value) "|" (clojure.string/join "|" (:v value))))]
        
        (->>  mappings
           (map #(select-values user-data %))

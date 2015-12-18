@@ -1,0 +1,22 @@
+1:42 18/12/2015
+
+{
+  "vos": [
+    {
+      "name": "ER"
+    },
+    {
+      "name": "GIT"
+    }]}
+
+
+(def user-data (->> "./user2.json"
+                     slurp
+                     StringReader.
+                     BufferedReader.
+                     json/parsed-seq
+                     first))
+
+[
+{:map ["vos" "name"] :to "v7"}
+]
