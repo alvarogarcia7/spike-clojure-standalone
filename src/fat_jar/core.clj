@@ -21,16 +21,13 @@
   (let [selector (:map data-mapping)
          output (:to data-mapping)]
     {:output output
-      :v(reduce #(% %2) coll selector)}))
+      :v (reduce #(% %2) coll selector)}))
 
 (defn write-file [filename payload]
    (with-open [w (clojure.java.io/writer filename)]
   (doseq [line payload]
     (.write w line)
     (.newLine w))))
-
-(let [pl (p/load-from {"key" "value"})]
-  (p/properties->map pl true))
 
 (def config
   (p/properties->map 
