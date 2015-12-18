@@ -50,9 +50,11 @@
     (->> "./mapper.properties" io/file p/load-from)
     true))
 
-(defn process []
+(defn process [options]
   (do 
-        (let [mappings (->> (config :input.mappings)
+        (let [destination-file (str (:output options) "/" (config :output.filename))
+
+               mappings (->> (config :input.mappings)
                      slurp
                      edn/read-string)
 
@@ -71,7 +73,7 @@
        (->>  mappings
           (map #(select-values user-data %))
           (map format-value)
-          (write-file (config :output.filename)))))))
+          (write-file destination-file))))))
 
 (defn -main [& args]
   (let [options (parse-opts args cli-options :strict true :missing true)
@@ -81,4 +83,4 @@
     (cond
       (errors? options) (do (print-help options) (println (:errors options)))
       (help? options) (print-help options)
-      :else (process))))
+      :else (process (:options options)))))
