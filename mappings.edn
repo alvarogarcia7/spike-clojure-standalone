@@ -1,4 +1,9 @@
-[
-{:map ["a" "b" "d"] :to "v1"}
-{:map ["a" "b1"] :to "v2"}
+{
+"test1" [
+	{:map ["a" "b" "d"] :to "v1"}
+	{:map ["a" "b1"] :to "v2"}
 ]
+"test2" [
+	{:map ["a" "b" "d"] :to "v1"}
+	{:map ["a" "b1"] :to "v2"}
+]}

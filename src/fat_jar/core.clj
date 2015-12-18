@@ -11,8 +11,8 @@
 (def cli-options
   [["-o" "--output DIRECTORY" "Folder where to write the file"
      :missing "output option is missing"]
-   ["-t" "--type TYPE" "type of input"
-     :missing "type option is missing"]
+   ["-t" "--template TYPE" "template for input"
+     :missing "template option is missing"]
 
    ["-h" "--help"]])
 
@@ -50,13 +50,16 @@
     (->> "./mapper.properties" io/file p/load-from)
     true))
 
+(defn at-output-folder [options filename]
+  (str (:output options) "/" filename))
+
 (defn process [options]
   (do 
-        (let [destination-file (str (:output options) "/" (config :output.filename))
+        (let [destination-file (at-output-folder options (config :output.filename))
 
-               mappings (->> (config :input.mappings)
-                     slurp
-                     edn/read-string)
+               mappings (get (->> (config :input.mappings)
+                                    slurp
+                                    edn/read-string) (:template options))
 
                user-data (->> (config :input.data)
                      slurp
