@@ -61,7 +61,7 @@
                                     slurp
                                     edn/read-string) (:template options))
 
-               user-data (->> (at-folder options (config :input.data))
+               user-data (->> (at-folder options (config :input.data.filename))
                      slurp
                      StringReader.
                      BufferedReader.
