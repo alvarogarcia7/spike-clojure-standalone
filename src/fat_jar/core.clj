@@ -31,10 +31,12 @@
             ;(println parent)
             ;(println many-from-list)
             ;(println many-from-single)
-            {:output output
+            (let [result {:output output
                :v value
-              :multiple multiple}
-             )))
+              :multiple multiple}]
+              (println "result for " selector " is " result)
+              result
+             ))))
 
 ; (select- {:map ["vos" "name"] :to "v7"} user-data)
 ; (select- {:map ["a"] :to "v7"} user-data)
@@ -46,12 +48,18 @@
     (.newLine w))))
 
 (def config
-  (p/properties->map 
-    (->> "./mapper.properties" io/file p/load-from)
-    true))
+  (let [properties (p/properties->map 
+        (->> "./mapper.properties" io/file p/load-from)
+        true)]
+      (do
+        (map println properties)
+        properties)))
 
 (defn at-folder [options filename]
-  (str (:output options) "/" filename))
+  (let [path (str (:output options) "/" filename)]
+      (do
+        (println (str "accessing " path))
+        path)))
 
 (defn process [options]
   (do 
@@ -72,6 +80,10 @@
                             (select- mapping coll))
                          (format-value [value]
                             (str (:multiple value) (:output value) "|" (clojure.string/join "|" (:v value))))]
+
+                         (println (str "destination-file " destination-file))
+                         (println (str "mappings " mappings))
+                         (println (str "user-data " user-data))
        
        (->>  mappings
           (map #(select-values user-data %))
